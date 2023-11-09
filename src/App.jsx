@@ -1,6 +1,7 @@
 // import { useState } from 'react'
 import "./App.css";
-import Cart from "./features/cart/Cart";
+import CartPage from "./pages/CartPage";
+import Checkout from "./pages/Checkout";
 import Home from "./pages/Home";
 import SigninPage from "./pages/SigninPage";
 import SignupPage from "./pages/SignupPage";
@@ -29,7 +30,11 @@ const router = createBrowserRouter([
   },
   {
     path: "cart",
-    element: <Cart/>
+    element: <CartPage/>
+  },
+  {
+    path: "checkout",
+    element: <Checkout/>
   },
 ]);
 
