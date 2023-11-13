@@ -12,7 +12,7 @@ export function fetchProductsByFilter(filter) {
 
   let queryString = "";
   for(let key in filter){
-    queryString += `${key}=${filter[key]}`
+    queryString += `${key}=${filter[key]}&`
   }
 
 
