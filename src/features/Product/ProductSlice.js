@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { fetchAllProducts } from "./ProductAPI"
+import { fetchAllProducts,fetchProductsByFilter } from "./ProductAPI"
 
 
 
@@ -12,6 +12,15 @@ export const fetchAllProductsAsync = createAsyncThunk(
   "product/fetchAllProducts",
   async () => {
     const response = await fetchAllProducts()
+    // The value we return becomes the `fulfilled` action payload
+    return response.data
+  },
+)
+
+export const fetchProductsByFilterAsync = createAsyncThunk(
+  "product/fetchProductsByFilter",
+  async (filter) => {
+    const response = await fetchProductsByFilter(filter)
     // The value we return becomes the `fulfilled` action payload
     return response.data
   },
@@ -34,6 +43,13 @@ export const productSlice = createSlice({
         state.status = "loading"
       })
       .addCase(fetchAllProductsAsync.fulfilled, (state, action) => {
+        state.status = "idle"
+        state.products = action.payload
+      })
+      .addCase(fetchProductsByFilterAsync.pending, (state) => {
+        state.status = "loading"
+      })
+      .addCase(fetchProductsByFilterAsync.fulfilled, (state, action) => {
         state.status = "idle"
         state.products = action.payload
       })
