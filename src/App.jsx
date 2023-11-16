@@ -6,12 +6,10 @@ import Checkout from "./pages/Checkout";
 import Home from "./pages/Home";
 import SigninPage from "./pages/SigninPage";
 import SignupPage from "./pages/SignupPage";
-import { createRoot } from "react-dom/client";
 import {
   createBrowserRouter,
   RouterProvider,
-  Route,
-  Link,
+  
 } from "react-router-dom";
 
 const router = createBrowserRouter([
@@ -38,8 +36,8 @@ const router = createBrowserRouter([
     element: <Checkout/>
   },
   {
-    path: "/product-detail",
-    element: <ProductDetailsPage/>
+    path: "/product-detail/:id",
+    element: <ProductDetailsPage></ProductDetailsPage>
   },
 ]);
 
