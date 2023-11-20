@@ -4,7 +4,7 @@ import ProductDetailsPage from "./pages/ProductDetailsPage";
 import CartPage from "./pages/CartPage";
 import Checkout from "./pages/Checkout";
 import Home from "./pages/Home";
-import SigninPage from "./pages/SigninPage";
+import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import {
   createBrowserRouter,
@@ -20,8 +20,8 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "signin",
-    element: <SigninPage/>
+    path: "login",
+    element: <LoginPage/>
   },
   {
     path: "signup",
