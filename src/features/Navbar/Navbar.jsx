@@ -7,12 +7,18 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
+import { selectItems } from "../cart/CartSlice";
+import { useSelector } from "react-redux";
 
 const navigation = [
   { name: "Dashboard", href: "#", current: true },
   { name: "Team", href: "#", current: false },
-  { name: "Projects", href: "#", current: false },
-  { name: "Calendar", href: "#", current: false },
+];
+
+const userNavigation = [
+  { name: "Your Profile", link: "/" },
+  { name: "Settings", link: "/" },
+  { name: "Sign out", link: "/login" },
 ];
 
 function classNames(...classes) {
@@ -20,6 +26,8 @@ function classNames(...classes) {
 }
 
 function Navbar({ children }) {
+  const items = useSelector(selectItems);
+
   return (
     <>
       <Disclosure as="nav" className="bg-gray-800">
@@ -41,20 +49,20 @@ function Navbar({ children }) {
                 </div>
                 <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                   <div className="flex flex-shrink-0 items-center">
-                   <Link to="/">
-                   <img
-                      className="h-8 w-auto"
-                      src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                      alt="Your Company"
-                    />
-                   </Link>
+                    <Link to="/">
+                      <img
+                        className="h-8 w-auto"
+                        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                        alt="Your Company"
+                      />
+                    </Link>
                   </div>
                   <div className="hidden sm:ml-6 sm:block">
                     <div className="flex space-x-4">
                       {navigation.map((item) => (
-                        <a
+                        <Link
                           key={item.name}
-                          href={item.href}
+                          to={item.Link}
                           className={classNames(
                             item.current
                               ? "bg-gray-900 text-white"
@@ -64,22 +72,30 @@ function Navbar({ children }) {
                           aria-current={item.current ? "page" : undefined}
                         >
                           {item.name}
-                        </a>
+                        </Link>
                       ))}
                     </div>
                   </div>
                 </div>
                 <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                   <Link to="/cart">
-                  <button
-                    type="button"
-                    className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                  >
-                    <span className="absolute -inset-1.5" />
-                    <span className="sr-only">View notifications</span>
-                    <ShoppingCartIcon className="h-6 w-6" aria-hidden="true" />
-                  </button>
+                    <button
+                      type="button"
+                      className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                    >
+                      <span className="absolute -inset-1.5" />
+                      <span className="sr-only">View notifications</span>
+                      <ShoppingCartIcon
+                        className="h-6 w-6"
+                        aria-hidden="true"
+                      />
+                    </button>
                   </Link>
+                  {items.length > 0 && (
+                    <span className="inline-flex items-center rounded-md  mb-5   bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">
+                      {items.length}
+                    </span>
+                  )}
 
                   {/* Profile dropdown */}
                   <Menu as="div" className="relative ml-3">
@@ -132,15 +148,15 @@ function Navbar({ children }) {
                         </Menu.Item>
                         <Menu.Item>
                           {({ active }) => (
-                            <a
-                              href="#"
+                            <Link
+                              to="/login"
                               className={classNames(
                                 active ? "bg-gray-100" : "",
                                 "block px-4 py-2 text-sm text-gray-700"
                               )}
                             >
                               Sign out
-                            </a>
+                            </Link>
                           )}
                         </Menu.Item>
                       </Menu.Items>

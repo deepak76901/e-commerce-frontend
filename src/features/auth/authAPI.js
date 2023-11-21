@@ -11,3 +11,27 @@ export function createUser(userData) {
   });
 }
   
+
+
+export function checkUser(logInInfo) {
+  return new Promise(async (resolve,reject) => {
+    const email = logInInfo.email
+    const password = logInInfo.password
+    const response = await fetch("http://localhost:8080/users?email="+ email);
+    // TODO: on server it will only return relevant insformation of user
+    const data = await response.json();
+    console.log({data})
+    
+    if(data.length){
+      if(password===data[0].password){
+        resolve({data:data[0]})
+      }else{
+        reject({message:"wrong credentials"})
+      }
+    }else{
+      reject({message:"user not found"})
+    }
+    resolve({data})
+  });
+}
+  
