@@ -5,6 +5,7 @@ import { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import { selectItems, updateCartAsync, deleteItemFromCartAsync } from "./CartSlice";
 import { useSelector, useDispatch } from "react-redux";
+import {Navigate} from "react-router-dom"
 
 function Cart() {
   const [open, setOpen] = useState(true);
@@ -26,6 +27,7 @@ function Cart() {
 
   return (
     <>
+    {!items.length && <Navigate to="/"></Navigate> }
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="mt-8 p-4 bg-white ">
           <h2 className="text-3xl pt-3 pb-3 font-semibold bg-white pl-3">
