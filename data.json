@@ -2338,11 +2338,23 @@
     {
       "email": "test@gmail.com",
       "password": "Qwerty123",
+      "addresses": [
+        {
+          "name": "deepak",
+          "email": "deepak12@gmail.com",
+          "phone": "23564",
+          "street": "`10 kain",
+          "city": "delhi",
+          "state": "delhi",
+          "pincode": "110062"
+        }
+      ],
       "id": 1
     },
     {
       "email": "demo@gmail.com",
       "password": "Qwerty123",
+      "addresses": [],
       "id": 2
     }
   ],
