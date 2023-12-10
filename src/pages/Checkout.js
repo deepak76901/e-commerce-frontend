@@ -9,36 +9,34 @@ import {
 } from "../features/cart/CartSlice";
 import { Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { selectLoggedInUser, updateUserAsync } from "../features/auth/authSlice";
-
-const addresses = [
-  {
-    name: "deepak",
-    street: "11th main",
-    city: "New york",
-    img: "https://images.pexels.com/photos/1852482/pexels-photo-1852482.jpeg?auto=compress&cs=tinysrgb&w=400",
-    email: "deepak@gmail.com",
-    phone: 1234,
-  },
-  {
-    name: "Kunal",
-    street: "12th main",
-    city: "Delhi",
-    img: "https://images.pexels.com/photos/1933873/pexels-photo-1933873.jpeg?auto=compress&cs=tinysrgb&w=400",
-    email: "kunal@gmail.com",
-    phone: 5678,
-  },
-];
+import {
+  selectLoggedInUser,
+  updateUserAsync,
+} from "../features/auth/authSlice";
+import { createOrderAsync } from "../features/order/OrderSlice";
 
 function Checkout() {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    reset,
+    formState: { errors },
+  } = useForm();
+
   const [open, setOpen] = useState(true);
+  const user = useSelector(selectLoggedInUser);
+
   const items = useSelector(selectItems);
+  const totalItems = items.reduce((total, item) => item.quantity + total, 0);
   const totalAmount = items.reduce(
     (amount, item) => item.price * item.quantity + amount,
     0
   );
-  const totalItems = items.reduce((total, item) => item.quantity + total, 0);
   const dispatch = useDispatch();
+
+  const [selectedAddress, setSelectedAddress] = useState(null);
+  const [paymentMethod, setPaymentMethod] = useState("cash");
 
   const handleQuantity = (e, item) => {
     dispatch(updateCartAsync({ ...item, quantity: +e.target.value }));
@@ -48,15 +46,19 @@ function Checkout() {
     dispatch(deleteItemFromCartAsync(id));
   };
 
-  const {
-    register,
-    handleSubmit,
-    watch,
-    reset,
-    formState: { errors },
-  } = useForm();
+  const handleAddress = (e) => {
+    console.log(e.target.value);
+    setSelectedAddress(user.addresses[e.target.value]);
+  };
+  const handlePayment = (e) => {
+    console.log(e.target.value);
+    setPaymentMethod(e.target.value);
+  };
 
-  const user  = useSelector(selectLoggedInUser)
+  const handleOrder = (e) => {
+    const order = {items,totalItems,totalAmount,selectedAddress,paymentMethod,user}
+    dispatch(createOrderAsync())
+  }
 
   return (
     <>
@@ -71,7 +73,10 @@ function Checkout() {
                 console.log(data);
                 dispatch(
                   // checkUserAsync({ email: data.email, password: data.password })
-                  updateUserAsync({...user,addresses:[...user.addresses,data]})
+                  updateUserAsync({
+                    ...user,
+                    addresses: [...user.addresses, data],
+                  })
                 );
               })}
             >
@@ -139,9 +144,7 @@ function Checkout() {
                               required: "phone number is required",
                             })}
                             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                          >
-                            
-                          </input>
+                          ></input>
                         </div>
                       </div>
 
@@ -245,16 +248,17 @@ function Checkout() {
                       Choose from existing addresses
                     </p>
                     <ul role="list" className="divide-y  divide-gray-900">
-                      {user.addresses.map((address) => (
+                      {user.addresses.map((address, index) => (
                         <li
-                          key={address.email}
+                          key={index}
                           className="flex justify-between gap-x-6 py-5 border-solid  border-3 border-gray-900"
                         >
                           <div className="flex min-w-0 gap-x-4  ">
                             <input
-                              id="cash"
+                              onChange={handleAddress}
                               name="address"
                               type="radio"
+                              value={index}
                               className="h-4 w-4 mx-5 border-gray-400 text-indigo-600 focus:ring-indigo-600  "
                             />
                             <img
@@ -296,6 +300,9 @@ function Checkout() {
                             <input
                               id="cash"
                               name="payments"
+                              onChange={handlePayment}
+                              value="cash"
+                              checked={paymentMethod == "cash"}
                               type="radio"
                               className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                             />
@@ -310,6 +317,9 @@ function Checkout() {
                             <input
                               id="card"
                               name="payments"
+                              onChange={handlePayment}
+                              value="card"
+                              checked={paymentMethod == "card"}
                               type="radio"
                               className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                             />
@@ -318,20 +328,6 @@ function Checkout() {
                               className="block text-sm font-medium leading-6 text-gray-900"
                             >
                               Debit/Credit Card
-                            </label>
-                          </div>
-                          <div className="flex items-center gap-x-3">
-                            <input
-                              id="online"
-                              name="payments"
-                              type="radio"
-                              className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                            />
-                            <label
-                              htmlFor="online"
-                              className="block text-sm font-medium leading-6 text-gray-900"
-                            >
-                              UPI/Net Banking
                             </label>
                           </div>
                         </div>
@@ -434,12 +430,12 @@ function Checkout() {
                   Shipping and taxes calculated at checkout.
                 </p>
                 <div className="mt-6">
-                  <Link
-                    to="/checkout"
-                    className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
-                  >
-                    Checkout
-                  </Link>
+                  <button 
+                  
+                  onClick={handleOrder}
+                  className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">
+                    Order Now
+                  </button>
                 </div>
                 <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                   <p>
