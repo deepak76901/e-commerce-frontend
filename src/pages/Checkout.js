@@ -13,7 +13,7 @@ import {
   selectLoggedInUser,
   updateUserAsync,
 } from "../features/auth/authSlice";
-import { createOrderAsync } from "../features/order/OrderSlice";
+import { createOrderAsync, selectCurrentOrder } from "../features/order/OrderSlice";
 
 function Checkout() {
   const {
@@ -26,7 +26,7 @@ function Checkout() {
 
   const [open, setOpen] = useState(true);
   const user = useSelector(selectLoggedInUser);
-
+  const currentOrder = useSelector(selectCurrentOrder)
   const items = useSelector(selectItems);
   const totalItems = items.reduce((total, item) => item.quantity + total, 0);
   const totalAmount = items.reduce(
@@ -56,12 +56,21 @@ function Checkout() {
   };
 
   const handleOrder = (e) => {
-    const order = {items,totalItems,totalAmount,selectedAddress,paymentMethod,user}
-    dispatch(createOrderAsync(order))
-  }
+    const order = {
+      items,
+      totalItems,
+      totalAmount,
+      selectedAddress,
+      paymentMethod,
+      user,
+      status : 'pending'
+    };
+    dispatch(createOrderAsync(order));
+  };
 
   return (
     <>
+      {currentOrder && <Navigate to={`/order-success/${currentOrder.id}`} ></Navigate>}
       {!items.length && <Navigate to="/"></Navigate>}
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 w-full">
         <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-5   ">
@@ -430,10 +439,10 @@ function Checkout() {
                   Shipping and taxes calculated at checkout.
                 </p>
                 <div className="mt-6">
-                  <button 
-                  
-                  onClick={handleOrder}
-                  className="flex items-center justify-center rounded-md border   border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">
+                  <button
+                    onClick={handleOrder}
+                    className="flex items-center justify-center rounded-md border   border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+                  >
                     Order Now
                   </button>
                 </div>

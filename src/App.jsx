@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import PageNotFound from "./pages/404";
+import OrderSuccess from "./pages/OrderSuccessPage"
 import {
   createBrowserRouter,
   RouterProvider,
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
   {
     path: "*",
     element: <PageNotFound/>
+  },
+  {
+    path: "/order-success/:id",
+    element: <OrderSuccess/>
   },
 ]);
 
