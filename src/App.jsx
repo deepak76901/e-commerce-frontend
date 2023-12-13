@@ -6,6 +6,7 @@ import Checkout from "./pages/Checkout";
 import Home from "./pages/Home";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
+import PageNotFound from "./pages/404";
 import {
   createBrowserRouter,
   RouterProvider,
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
   {
     path: "/product-detail/:id",
     element: <Protected><ProductDetailsPage/></Protected>
+  },
+  {
+    path: "*",
+    element: <PageNotFound/>
   },
 ]);
 
