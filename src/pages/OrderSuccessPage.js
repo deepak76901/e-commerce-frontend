@@ -1,11 +1,23 @@
-import { Link, Navigate, useSearchParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
+import {useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {resetCartAsync,} from "../features/cart/CartSlice";
+import {selectLoggedInUser} from "../features/auth/authSlice";
+import {resetOrder} from "../features/order/OrderSlice";
 
-export default function OrderSucces() {
-  const params = useSearchParams();
+
+export default function OrderSuccessPage() {
+  const params = useParams();
+  const dispatch = useDispatch()
+  const user = useSelector(selectLoggedInUser)
+  useEffect(() => {
+    dispatch(resetCartAsync(user.id))
+    dispatch(resetOrder())
+  }, [dispatch,user]);
 
   return (
     <>
-      {!params.id && <Navigate to="/"></Navigate>}
+      {!params.id && <Navigate to="/" replace={true} ></Navigate>}
       <main className="grid min-h-full place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
         <div className="text-center">
           <p className="text-base font-semibold text-indigo-600">

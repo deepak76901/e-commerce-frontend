@@ -40,12 +40,8 @@ export const updateUserAsync = createAsyncThunk(
 export const authSlice = createSlice({
   name: "user",
   initialState,
-  // The `reducers` field lets us define reducers and generate associated actions
   reducers: {
-    increment: (state) => {
-      
-      state.value += 1
-    },
+    
   },
 
   extraReducers: (builder) => {
