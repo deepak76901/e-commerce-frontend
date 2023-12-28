@@ -19,6 +19,7 @@ import { useEffect } from "react";
 import { fetchItemsByUserIdAsync } from "./features/cart/CartSlice";
 import { selectLoggedInUser } from "./features/auth/authSlice";
 import {useDispatch,useSelector} from "react-redux"
+import LogOut from "./features/auth/components/Logout";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
   {
     path: "signup",
     element: <SignupPage/>
+  },
+  {
+    path: "/logout",
+    element: <LogOut/>
   },
   {
     path: "cart",

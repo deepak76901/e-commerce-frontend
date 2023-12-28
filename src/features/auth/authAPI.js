@@ -48,3 +48,10 @@ export function checkUser(logInInfo) {
   });
 }
   
+export function logOut(userId) {
+  return new Promise(async (resolve) => {
+    
+    // TODO: on server we will remove user session info
+    resolve({data : "success"})
+  });
+}
