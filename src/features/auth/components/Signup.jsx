@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { selectLoggedInUser,createUserAsync } from "../authSlice";
-import {useDispatch, useSelector} from "react-redux"
-import {Navigate} from "react-router-dom"
+import { selectLoggedInUser, createUserAsync } from "../authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
 
 function Signup() {
   const {
@@ -13,16 +13,15 @@ function Signup() {
     formState: { errors },
   } = useForm();
 
-  const dispatch = useDispatch()
-  const user = useSelector(selectLoggedInUser)
+  const dispatch = useDispatch();
+  const user = useSelector(selectLoggedInUser);
 
   console.log(errors);
 
   return (
     <>
-
       {user?.email}
-      {user && <Navigate to="/" replace={true} ></Navigate>}
+      {user && <Navigate to="/" replace={true}></Navigate>}
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
@@ -41,8 +40,15 @@ function Signup() {
             className="space-y-6"
             onSubmit={handleSubmit((data) => {
               console.log(data);
-              dispatch(createUserAsync({email:data.email,password:data.password , addresses:[]}))
-              
+              dispatch(
+                createUserAsync({
+                  email: data.email,
+                  password: data.password,
+                  addresses: [],
+                  role: "user",
+                  /* TODO: this role will be later set by backend*/
+                })
+              );
             })}
           >
             <div>
@@ -112,7 +118,9 @@ function Signup() {
                   id="confirmPassword"
                   {...register("confirmPassword", {
                     required: "please confirm password",
-                    validate: (value, formValues) => value === formValues.password || "password is not matching"
+                    validate: (value, formValues) =>
+                      value === formValues.password ||
+                      "password is not matching",
                   })}
                   type="password"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
