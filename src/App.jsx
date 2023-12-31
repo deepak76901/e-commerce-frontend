@@ -8,7 +8,7 @@ import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import PageNotFound from "./pages/404";
 import OrderSuccessPage from "./pages/OrderSuccessPage";
-import UserOrders from "./features/user/UserOrders";
+import UserOrderPage from "./pages/UserOrderPage";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Protected from "./features/auth/components/Protected";
 import { useEffect } from "react";
@@ -20,7 +20,8 @@ import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import ProtectedAdmin from "./features/auth/components/ProtectedAdmin";
 import AdminHome from "./pages/AdminHome";
 import AdminProductDetailsPage from "./pages/AdminProductDetailsPage";
-import Profile from "./features/user/Profile";
+import UserProfilePage from "./pages/UserProfilePage";
+import { fetchLoggedInUserAsync } from "./features/user/userSlice";
 
 const router = createBrowserRouter([
   {
@@ -93,11 +94,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/orders",
-    element: <UserOrders></UserOrders>,
+    element: <UserOrderPage></UserOrderPage>,
   },
   {
     path: "/profile",
-    element: <Profile></Profile>,
+    element: <UserProfilePage></UserProfilePage>,
   },
 ]);
 
@@ -108,6 +109,7 @@ function App() {
   useEffect(() => {
     if (user) {
       dispatch(fetchItemsByUserIdAsync(user.id));
+      dispatch(fetchLoggedInUserAsync(user.id));
     }
   }, [user, dispatch]);
 
