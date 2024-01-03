@@ -68,31 +68,6 @@ function UserOrders() {
                 <p>Total Items in Cart</p>
                 <p>{order.totalItems} items</p>
               </div>
-              <p className="mt-0.5 text-sm mt-5 text-xl text-gray-500">
-                Shipping Address
-              </p>
-              <div
-                className="flex justify-between gap-x-6 py-5 border-solid  border-3 border-gray-900"
-              >
-                <div className="flex min-w-0 gap-x-4  ">
-                  <div className="min-w-0 flex-auto">
-                    <p className="text-sm font-semibold leading-6 text-gray-900">
-                      {order.selectedAddress.name}
-                    </p>
-                    <p className="mt-1 truncate text-xs leading-5 text-gray-500">
-                      {order.selectedAddress.city}
-                    </p>
-                  </div>
-                </div>
-                <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
-                  <p className="text-sm leading-6  text-gray-900">
-                    email: {order.selectedAddress.email}
-                  </p>
-                  <p className="text-sm leading-6  text-gray-900">
-                    phone: {order.selectedAddress.phone}
-                  </p>
-                </div>
-              </div>
             </div>
           </div>
         </div>

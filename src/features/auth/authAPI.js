@@ -24,7 +24,7 @@ export function checkUser(logInInfo) {
       if (password === data[0].password) {
         resolve({ data: data[0] });
       } else {
-        reject({ message: "wrong credentials" });
+        reject({ message: "wrong credentials" }); 
       }
     } else {
       reject({ message: "user not found" });

@@ -26,7 +26,11 @@ import { fetchLoggedInUserAsync } from "./features/user/userSlice";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
+    element: (
+      <Protected>
+        <Home />
+      </Protected>
+    ),
   },
   {
     path: "/admin",

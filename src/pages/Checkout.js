@@ -10,13 +10,14 @@ import {
 import { Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import {
-  selectLoggedInUser,
   updateUserAsync,
 } from "../features/auth/authSlice";
 import {
   createOrderAsync,
   selectCurrentOrder,
 } from "../features/order/OrderSlice";
+import { selectUserInfo } from "../features/user/userSlice";
+import Navbar from "../features/Navbar/Navbar";
 
 function Checkout() {
   const {
@@ -28,7 +29,7 @@ function Checkout() {
   } = useForm();
 
   const [open, setOpen] = useState(true);
-  const user = useSelector(selectLoggedInUser);
+  const user = useSelector(selectUserInfo);
   const currentOrder = useSelector(selectCurrentOrder);
   const items = useSelector(selectItems);
   const totalItems = items.reduce((total, item) => item.quantity + total, 0);
@@ -77,6 +78,7 @@ function Checkout() {
         <Navigate to={`/order-success/${currentOrder.id}`}></Navigate>
       )}
       {!items.length && <Navigate to="/"></Navigate>}
+      <Navbar />
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 w-full">
         <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-5   ">
           <div className="lg:col-span-3 ">
