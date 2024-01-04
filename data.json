@@ -1838,6 +1838,23 @@
         "https://i.dummyjson.com/data/products/100/3.jpg",
         "https://i.dummyjson.com/data/products/100/thumbnail.jpg"
       ]
+    },
+    {
+      "title": "Safari",
+      "description": "Tata safari is good car",
+      "brand": "Hemani Tea",
+      "category": "automotive",
+      "price": "1200",
+      "discountPercentage": "10",
+      "stock": "19",
+      "images": [
+        "\"https://i.dummyjson.com/data/products/1/1.jpg\"",
+        "\"https://i.dummyjson.com/data/products/1/1.jpg\"",
+        "\"https://i.dummyjson.com/data/products/1/1.jpg\"",
+        "\"https://i.dummyjson.com/data/products/1/1.jpg\""
+      ],
+      "rating": 0,
+      "id": 101
     }
   ],
   "brands": [
@@ -2365,7 +2382,7 @@
     {
       "name": "admin",
       "email": "admin@gmail.com",
-      "password": "Admin123",
+      "password": "1",
       "addresses": [],
       "role": "admin",
       "id": 2

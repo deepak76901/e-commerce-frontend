@@ -39,7 +39,7 @@ function Profile() {
     setValue("pincode", address.pincode);
   };
   const handleAdd = (address) => {
-    const newUser = { ...user, addresses: [...user.addresses,address] };
+    const newUser = { ...user, addresses: [...user.addresses, address] };
     dispatch(updateUserAsync(newUser));
     setShowAddAddressForm(false);
   };
@@ -50,9 +50,14 @@ function Profile() {
         <h2 className="text-3xl pt-3 pb-3 font-semibold bg-white pl-3">
           Name: {user.name ? user.name : "john doe"}
         </h2>
-        <h2 className="text-red-900 pt-3 pb-3 font-semibold bg-white pl-3">
+        <h3 className="text-red-900 pt-1 pb-1 font-semibold bg-white pl-3">
           Email Address: {user.email ? user.email : "johndoe@gmail.com"}
-        </h2>
+        </h3>
+        {user.role === "admin" && (
+          <h3 className="text-red-900 pt-1 pb-3 font-semibold bg-white pl-3">
+            Role: {user.role}
+          </h3>
+        )}
         <button
           onClick={(e) => {
             setShowAddAddressForm(true);
@@ -210,6 +215,13 @@ function Profile() {
                           />
                         </div>
                         <div className="mt-6 pb-6 flex items-center justify-end gap-x-6">
+                          <button
+                            onClick={(e) => setShowAddAddressForm(false)}
+                            type="button"
+                            className="text-sm font-semibold leading-6  text-gray-900"
+                          >
+                            Cancel
+                          </button>
                           <button
                             type="submit"
                             className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"

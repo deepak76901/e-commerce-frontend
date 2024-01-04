@@ -1,12 +1,12 @@
 import React from "react";
 import Navbar from "../features/Navbar/Navbar";
-import ProductList from "../features/Product/components/ProductList";
+import AdminProductList from "../features/admin/components/AdminProductList";
 
 function AdminHome() {
   return (
     <div>
       <Navbar />
-      <ProductList />
+      <AdminProductList />
     </div>
   );
 }
