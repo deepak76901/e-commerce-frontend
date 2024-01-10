@@ -2386,6 +2386,20 @@
       "addresses": [],
       "role": "admin",
       "id": 2
+    },
+    {
+      "name": "Temp",
+      "email": "Temp@gmail.com",
+      "password": "1",
+      "addresses": [],
+      "role": "user",
+      "id": 3
+    },
+    {
+      "email": "deepak@gmail.com",
+      "password": "Qwerty123",
+      "addresses": [],
+      "id": 4
     }
   ],
   "cart": [

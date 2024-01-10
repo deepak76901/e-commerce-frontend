@@ -23,6 +23,7 @@ import AdminProductDetailsPage from "./pages/AdminProductDetailsPage";
 import UserProfilePage from "./pages/UserProfilePage";
 import { fetchLoggedInUserAsync } from "./features/user/userSlice";
 import AddProductPage from "./pages/AddProductPage";
+import AdminOrdersPage from "./pages/AdminOrdersPage";
 
 const router = createBrowserRouter([
   {
@@ -116,6 +117,14 @@ const router = createBrowserRouter([
   {
     path: "/orders",
     element: <UserOrderPage></UserOrderPage>,
+  },
+  {
+    path: "/admin/orders",
+    element: (
+      <ProtectedAdmin>
+        <AdminOrdersPage></AdminOrdersPage>
+      </ProtectedAdmin>
+    ),
   },
   {
     path: "/profile",
