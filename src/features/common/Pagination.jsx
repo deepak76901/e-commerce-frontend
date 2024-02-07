@@ -4,7 +4,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 export default function Pagination({ page, setPage, handlePage, totalItems }) {
   const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
   return (
-    <div className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
+    <div className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6 ">
       <div className="flex flex-1 justify-between sm:hidden">
         <div
           onClick={(e) => handlePage(page > 1 ? page - 1 : page)}
@@ -53,7 +53,7 @@ export default function Pagination({ page, setPage, handlePage, totalItems }) {
               <div
                 onClick={(e) => handlePage(index + 1)}
                 aria-current="page"
-                className={`relative z-10 inline-flex items-center ${
+                className={`relative z-10 inline-flex items-center cursor-pointer ${
                   index + 1 === page
                     ? "bg-indigo-600 hover:cursor-pointer text-white"
                     : "text-gray-900"

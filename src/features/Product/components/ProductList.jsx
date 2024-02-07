@@ -11,7 +11,7 @@ import {
   selectBrands,
   selectCategories,
   fetchBrandsAsync,
-  fetchCategoryAsync
+  fetchCategoryAsync,
 } from "../ProductSlice";
 import {
   ChevronDownIcon,
@@ -54,7 +54,6 @@ const sortOptions = [
   { name: "Price: Low to High", sort: "price", order: "asc", current: false },
   { name: "Price: High to Low", sort: "price", order: "desc", current: false },
 ];
-
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -100,7 +99,6 @@ export default function ProductList() {
   const brands = useSelector(selectBrands);
   const categories = useSelector(selectCategories);
 
-
   const totalItems = useSelector(selectTotalItems);
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [filter, setFilter] = useState({});
@@ -108,19 +106,17 @@ export default function ProductList() {
   const [page, setPage] = useState(1);
 
   const filters = [
-  {
-    id: "category",
-    name: "Category",
-    options:categories,
-    
-  },
-  {
-    id: "brand",
-    name: "Brand",
-    options: brands,
-  },
-];
-
+    {
+      id: "category",
+      name: "Category",
+      options: categories,
+    },
+    {
+      id: "brand",
+      name: "Brand",
+      options: brands,
+    },
+  ];
 
   const handleFilter = (e, section, option) => {
     const newFilter = { ...filter };
@@ -158,15 +154,14 @@ export default function ProductList() {
     dispatch(fetchProductsByFilterAsync({ filter, sort, pagination }));
   }, [dispatch, filter, sort, page]);
 
-
   useEffect(() => {
     setPage(1);
-  },[totalItems,sort])
+  }, [totalItems, sort]);
 
   useEffect(() => {
-      dispatch(fetchBrandsAsync())
-      dispatch(fetchCategoryAsync())
-  },[])
+    dispatch(fetchBrandsAsync());
+    dispatch(fetchCategoryAsync());
+  }, []);
 
   return (
     <div>
@@ -258,7 +253,10 @@ export default function ProductList() {
 
               <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
                 {/* Filters */}
-                <DesktopFilter handleFilter={handleFilter}  filters={filters}></DesktopFilter>
+                <DesktopFilter
+                  handleFilter={handleFilter}
+                  filters={filters}
+                ></DesktopFilter>
 
                 {/* Product grid */}
                 <div className="lg:col-span-3">
@@ -283,7 +281,7 @@ function MobileFilter({
   mobileFiltersOpen,
   setMobileFiltersOpen,
   handleFilter,
-  filters
+  filters,
 }) {
   return (
     <Transition.Root show={mobileFiltersOpen} as={Fragment}>
@@ -398,7 +396,7 @@ function MobileFilter({
   );
 }
 
-function DesktopFilter({ handleFilter , filters }) {
+function DesktopFilter({ handleFilter, filters }) {
   return (
     <>
       <form className="hidden lg:block">
@@ -497,11 +495,10 @@ function ProductGrid({ products }) {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-gray-900">
-                      ${discountedPrice(product)}
-                        
+                        ${discountedPrice(product)}
                       </p>
                       <p className="text-sm font-medium text-gray-500 line-through">
-                      ${product.price}
+                        ${product.price}
                       </p>
                     </div>
                   </div>
@@ -510,7 +507,7 @@ function ProductGrid({ products }) {
                       <p className="text-sm text-red-400">Product Deleted </p>
                     </div>
                   )}
-                  {product.stock<=0 && (
+                  {product.stock <= 0 && (
                     <div>
                       <p className="text-sm text-red-400">Out of Stock </p>
                     </div>
@@ -524,7 +521,3 @@ function ProductGrid({ products }) {
     </>
   );
 }
-
-
-
-

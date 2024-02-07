@@ -4,7 +4,7 @@ import { RadioGroup } from "@headlessui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProductByIdAsync, selectProductById } from "../ProductSlice";
 import { useParams } from "react-router-dom";
-import { addToCartAsync } from "../../cart/CartSlice";
+import { addToCartAsync, selectItems } from "../../cart/CartSlice";
 import { discountedPrice } from "../../../app/constants";
 
 const colors = [
@@ -32,15 +32,24 @@ export default function ProductDetails() {
   const [selectedColor, setSelectedColor] = useState(colors[0]);
   const [selectedSize, setSelectedSize] = useState(sizes[2]);
   const product = useSelector(selectProductById);
+  const items = useSelector(selectItems);
   const dispatch = useDispatch();
   const params = useParams();
 
   const handleCart = (e) => {
-    e.preventDefault()
-    const newItem = {...product,quantity:1}
-    delete newItem['id']
-      dispatch(addToCartAsync(newItem))
-  }
+    e.preventDefault();
+    if (items.findIndex((item) => item.product.id === product.id) < 0) {
+      console.log({ items, product });
+      const newItem = {
+        product: product.id,
+        quantity: 1,
+        // user:user.id,
+      };
+      dispatch(addToCartAsync({ item: newItem, alert }));
+    } else {
+      alert.error("Item Already added");
+    }
+  };
 
   useEffect(() => {
     dispatch(fetchProductByIdAsync(params.id));
@@ -56,7 +65,6 @@ export default function ProductDetails() {
               role="list"
               className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8"
             >
-              
               <li className="text-sm">
                 <a
                   href={product.href}
@@ -115,7 +123,7 @@ export default function ProductDetails() {
             <div className="mt-4 lg:row-span-3 lg:mt-0">
               <h2 className="sr-only">Product information</h2>
               <p className="text-3xl tracking-tight text-gray-900">
-              ${discountedPrice(product)}
+                ${discountedPrice(product)}
               </p>
 
               {/* Reviews */}
@@ -291,9 +299,7 @@ export default function ProductDetails() {
                   Highlights
                 </h3>
 
-                <div className="mt-4">
-                 
-                </div>
+                <div className="mt-4"></div>
               </div>
 
               <div className="mt-10">

@@ -1,6 +1,6 @@
 export function createUser(userData) {
   return new Promise(async (resolve) => {
-    const response = await fetch("http://localhost:8080/users", {
+    const response = await fetch("http://localhost:8080/auth/signup", {
       method: "POST",
       body: JSON.stringify(userData),
       headers: { "Content-type": "application/json" },
@@ -13,23 +13,26 @@ export function createUser(userData) {
 
 export function checkUser(logInInfo) {
   return new Promise(async (resolve, reject) => {
-    const email = logInInfo.email;
-    const password = logInInfo.password;
-    const response = await fetch("http://localhost:8080/users?email=" + email);
-    // TODO: on server it will only return relevant insformation of user
-    const data = await response.json();
-    console.log({ data });
+    try {
+      const email = logInInfo.email;
+      const password = logInInfo.password;
+      const response = await fetch("http://localhost:8080/auth/login", {
+        method: "POST",
+        body: JSON.stringify(logInInfo),
+        headers: { "content-type": "application/json" },
+      });
 
-    if (data.length) {
-      if (password === data[0].password) {
-        resolve({ data: data[0] });
-      } else {
-        reject({ message: "wrong credentials" }); 
+      if(response.ok){
+        const data = await response.json();
+        resolve({ data });
+      }else{
+        const err = await response.json()
+        reject(err)
       }
-    } else {
-      reject({ message: "user not found" });
+     
+    } catch (error) {
+      reject(error );
     }
-    resolve({ data });
   });
 }
 
