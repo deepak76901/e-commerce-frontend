@@ -29,17 +29,13 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: (
-      <Protected>
         <Home />
-      </Protected>
     ),
   },
   {
     path: "/admin",
     element: (
-      <ProtectedAdmin>
         <AdminHome />
-      </ProtectedAdmin>
     ),
   },
   {
@@ -61,49 +57,37 @@ const router = createBrowserRouter([
   {
     path: "cart",
     element: (
-      <Protected>
         <CartPage />
-      </Protected>
     ),
   },
   {
     path: "checkout",
     element: (
-      <Protected>
         <Checkout />
-      </Protected>
     ),
   },
   {
     path: "/product-detail/:id",
     element: (
-      <Protected>
         <ProductDetailsPage />
-      </Protected>
     ),
   },
   {
     path: "/admin/product-detail/:id",
     element: (
-      <ProtectedAdmin>
         <AdminProductDetailsPage />
-      </ProtectedAdmin>
     ),
   },
   {
     path: "/admin/product-form",
     element: (
-      <ProtectedAdmin>
         <AddProductPage />
-      </ProtectedAdmin>
     ),
   },
   {
     path: "/admin/product-form/edit/:id",
     element: (
-      <ProtectedAdmin>
         <AddProductPage />
-      </ProtectedAdmin>
     ),
   },
   {
@@ -121,9 +105,7 @@ const router = createBrowserRouter([
   {
     path: "/admin/orders",
     element: (
-      <ProtectedAdmin>
         <AdminOrdersPage></AdminOrdersPage>
-      </ProtectedAdmin>
     ),
   },
   {

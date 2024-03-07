@@ -1,6 +1,6 @@
 export function createUser(userData) {
   return new Promise(async (resolve) => {
-    const response = await fetch("http://localhost:8080/auth/signup", {
+    const response = await fetch("/auth/signup", {
       method: "POST",
       body: JSON.stringify(userData),
       headers: { "Content-type": "application/json" },
@@ -16,7 +16,7 @@ export function checkUser(logInInfo) {
     try {
       const email = logInInfo.email;
       const password = logInInfo.password;
-      const response = await fetch("http://localhost:8080/auth/login", {
+      const response = await fetch("/auth/login", {
         method: "POST",
         body: JSON.stringify(logInInfo),
         headers: { "content-type": "application/json" },
